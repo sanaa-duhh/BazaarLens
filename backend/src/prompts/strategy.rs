@@ -1,5 +1,5 @@
 /// Model used for strategy generation — DeepSeek Prover V2 for structured reasoning.
-pub const STRATEGY_MODEL: &str = "deepseek/deepseek-prover-v2";
+pub const STRATEGY_MODEL: &str = "deepseek/deepseek-v4-pro";
 
 /// Builds the multi-perspective strategy prompt. Three AI advisors respond in one call,
 /// then give a unified final decision. The word "JSON" and an explicit schema are

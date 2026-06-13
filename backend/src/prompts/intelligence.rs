@@ -1,7 +1,7 @@
 //! Intelligence-card prompt. One DeepSeek call, structured JSON out (see CLAUDE.md §9).
 
 /// Model used for intelligence generation — DeepSeek V4 (free tier on OpenRouter).
-pub const INTELLIGENCE_MODEL: &str = "deepseek/deepseek-chat-v4";
+pub const INTELLIGENCE_MODEL: &str = "deepseek/deepseek-v4-pro";
 
 /// Builds the intelligence prompt for a product. `brand`/`category` fall back to
 /// "Unknown" so the model always has a complete context block. The word "JSON" and
