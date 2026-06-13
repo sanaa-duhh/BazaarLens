@@ -1,1 +1,3 @@
-// Phase 3+ adds: intelligence, strategy prompt templates
+pub mod intelligence;
+
+// Phase 6 adds: strategy prompt template
