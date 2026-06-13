@@ -5,6 +5,8 @@ use axum::{
 };
 use serde_json::json;
 
+// Variants are used starting Phase 2 when route handlers are added
+#[allow(dead_code)]
 #[derive(Debug)]
 pub enum AppError {
     NotFound(String),
