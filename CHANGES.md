@@ -98,16 +98,44 @@ Format: `[version] — date — phase/branch — description`
 
 ---
 
-## Upcoming — Phase 3 (`feat/phase-3-intelligence`)
+## Phase 3 — AI Intelligence Card (`feat/phase-3-intelligence`)
 
-> Blocked on Phase 2.
+### 2026-06-13 — Intelligence card, end-to-end
 
-### Expected Changes
-- Intelligence card prompt template
-- `POST /api/intelligence` route with SQLite cache
-- `IntelligenceCard` with stagger animation
-- `RecommendationBadge`, `PricingInsight`, `ReviewInsight`, `MarketInsight` components
-- `/product/[id]` page
+#### Added — Backend
+- `prompts/intelligence.rs` — DeepSeek V4 prompt builder (`INTELLIGENCE_MODEL` const,
+  India-seller market-analyst framing, explicit JSON schema, brand/category fallbacks)
+- `schemas/intelligence.rs` — `IntelligenceRequest`, `IntelligenceCardLlmResponse`
+  (schema the model is validated against), `IntelligenceCardResponse` (client envelope)
+- `api/intelligence.rs` — `POST /api/intelligence`: fetch product (404 → `PRODUCT_NOT_FOUND`),
+  `intelligence_cards` cache check, `LlmService::call_text` with DeepSeek V4, schema
+  validation, `INSERT OR IGNORE` (UNIQUE(product_id) absorbs races), `cached` flag
+- `main.rs`/`api/mod.rs`/`schemas/mod.rs`/`prompts/mod.rs` — module wiring + router merge
+
+#### Added — Frontend
+- `components/intelligence/RecommendationBadge.tsx` — color-coded (buy/hold/avoid/watch) pulsing badge
+- `components/intelligence/InsightPanel.tsx` — shared `InsightPanelProps` + presentational base
+- `components/intelligence/{Pricing,Review,Market}Insight.tsx` — interchangeable panels (SOLID — Liskov)
+- `components/intelligence/IntelligenceCardSkeleton.tsx` — 4-panel loading state, "AI is thinking…"
+- `components/intelligence/IntelligenceCard.tsx` — staggered reveal via `animate-fade-in-1..4`
+- `components/watchlist/AddToWatchlistButton.tsx` — POST /api/watchlist, "Watching" toggle, haptic
+- `components/ShareButton.tsx` — Web Share API with clipboard fallback
+- `app/product/[id]/page.tsx` — sessionStorage handoff, intelligence on mount, sticky action bar
+- `types/index.ts` — `IntelligenceCard` gains `cached`; `confidence` nullable
+
+#### Deviations from plan (intentional)
+- **No GET-product endpoint:** the product page reads product details from
+  `sessionStorage` (set by the scan flow). `docs/api.md` defines no product-by-id route,
+  so a cold load with no sessionStorage falls back to a neutral title — the intelligence
+  call itself only needs `product_id` from the URL.
+- **AddToWatchlist** posts to `/api/watchlist`, which is built in Phase 4; until then the
+  button surfaces a retry instead of crashing.
+
+#### Verified locally
+- `cargo fmt --check`, `cargo clippy -D warnings` — pass *(built with `web-push` temporarily
+  removed to sidestep an `openssl-sys` native-dep gap on Windows/MSVC; `web-push` is unused
+  before Phase 5, and `Cargo.toml`/`Cargo.lock` were restored unchanged)*
+- `npm run lint`, `npm run build` — pass, no errors
 
 ---
 

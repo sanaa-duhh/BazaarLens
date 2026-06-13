@@ -26,8 +26,9 @@ export interface IntelligenceCard {
   market_insight: string;
   recommendation: string;
   recommendation_level: RecommendationLevel;
-  confidence: number;
+  confidence: number | null;
   model_used: string | null;
+  cached: boolean;
   generated_at: string;
 }
 

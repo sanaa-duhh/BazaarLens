@@ -1,3 +1,4 @@
+pub mod intelligence;
 pub mod scan;
 
 use serde::Serialize;
