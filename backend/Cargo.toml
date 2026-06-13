@@ -1,0 +1,26 @@
+[package]
+name = "bazaarlens-backend"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "bazaarlens"
+path = "src/main.rs"
+
+[dependencies]
+axum            = "0.7"
+tokio           = { version = "1", features = ["full"] }
+tower-http      = { version = "0.5", features = ["cors"] }
+serde           = { version = "1", features = ["derive"] }
+serde_json      = "1"
+sqlx            = { version = "0.7", features = ["sqlite", "runtime-tokio", "uuid", "chrono", "migrate"] }
+reqwest         = { version = "0.12", features = ["json", "multipart"] }
+uuid            = { version = "1", features = ["v4"] }
+web-push        = "0.10"
+dotenvy         = "0.15"
+anyhow          = "1"
+tracing         = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+chrono          = { version = "0.4", features = ["serde"] }
+base64          = "0.22"
+tokio-util      = "0.7"
