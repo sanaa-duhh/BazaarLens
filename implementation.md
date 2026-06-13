@@ -759,7 +759,8 @@ Cards use `bg-card` background, `rounded-xl`, `p-4`.
 **Branch:** `feat/phase-4-watchlist`  
 **Estimated Time:** 3 hours  
 **Assigned To:** Developer A  
-**Depends On:** Phase 3 merged to `main`
+**Depends On:** Phase 3 merged to `main`  
+**Status:** COMPLETE ✓ — merged to `main`
 
 ### Goal
 Users can view all monitored products, remove them, and navigate between Scan and Watchlist tabs. Bottom navigation is persistent across all pages.
@@ -844,12 +845,12 @@ All routes extract `device_id` from `X-Device-Id` header. Return `AppError::Miss
 ---
 
 ### Phase 4 Acceptance Criteria
-- [ ] Adding product from `/product/[id]` → appears in `/watchlist` on next load
-- [ ] Remove from watchlist works, card disappears immediately (SWR mutation)
-- [ ] `device_id` persists across page refreshes (localStorage)
-- [ ] Empty state shown with working CTA
-- [ ] Bottom nav tabs highlight correctly based on current route
-- [ ] GET watchlist response includes `recommendation_level` from intelligence card
+- [x] Adding product from `/product/[id]` → appears in `/watchlist` on next load
+- [x] Remove from watchlist works, card disappears immediately (SWR mutation)
+- [x] `device_id` persists across page refreshes (localStorage)
+- [x] Empty state shown with working CTA
+- [x] Bottom nav tabs highlight correctly based on current route
+- [x] GET watchlist response includes `recommendation_level` from intelligence card
 
 ### Handoff Notes for Phase 5
 - `useWatchlist` is ready — Phase 5 adds `EnableAlertsCard` above the watchlist list
