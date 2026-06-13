@@ -1,7 +1,9 @@
+pub mod events;
 pub mod health;
 pub mod intelligence;
 pub mod push;
 pub mod scan;
+pub mod strategy;
 pub mod watchlist;
 
 use axum::Router;
@@ -16,4 +18,6 @@ pub fn router() -> Router<Arc<AppState>> {
         .merge(intelligence::router())
         .merge(watchlist::router())
         .merge(push::router())
+        .merge(events::router())
+        .merge(strategy::router())
 }

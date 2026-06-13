@@ -11,6 +11,7 @@ const VISION_MODEL: &str = "minimax/minimax-m3";
 /// Thin OpenRouter chat-completions client. One shared `reqwest::Client` is reused
 /// across calls. Every request forces `response_format: json_object`; callers must
 /// include the word "JSON" in their prompt (an OpenRouter requirement).
+#[derive(Clone)]
 pub struct LlmService {
     client: reqwest::Client,
     api_key: String,

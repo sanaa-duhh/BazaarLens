@@ -22,8 +22,10 @@ pub struct PushSubscription {
     pub auth_key: String,
 }
 
+/// `IsahcWebPushClient` is not `Clone`, so we store only the key and recreate the
+/// client per send. Client construction is cheap (it just wraps an isahc HttpClient).
+#[derive(Clone)]
 pub struct PushService {
-    client: IsahcWebPushClient,
     /// URL-safe base64-encoded VAPID private key (EC P-256 raw bytes).
     vapid_private_key_b64: String,
 }
@@ -35,8 +37,6 @@ impl PushService {
             .map_err(|e| anyhow!("invalid VAPID private key: {e}"))?;
 
         Ok(Self {
-            client: IsahcWebPushClient::new()
-                .map_err(|e| anyhow!("push client init failed: {e}"))?,
             vapid_private_key_b64: vapid_private_key_b64.to_string(),
         })
     }
@@ -71,7 +71,10 @@ impl PushService {
             .build()
             .map_err(|e| anyhow!("message build error: {e}"))?;
 
-        match self.client.send(message).await {
+        let client =
+            IsahcWebPushClient::new().map_err(|e| anyhow!("push client init failed: {e}"))?;
+
+        match client.send(message).await {
             Ok(()) => {
                 info!(device_id = %subscription.device_id, "push notification delivered");
                 Ok(true)

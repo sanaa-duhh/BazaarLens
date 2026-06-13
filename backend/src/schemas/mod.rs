@@ -1,6 +1,8 @@
+pub mod events;
 pub mod intelligence;
 pub mod push;
 pub mod scan;
+pub mod strategy;
 pub mod watchlist;
 
 use serde::Serialize;
