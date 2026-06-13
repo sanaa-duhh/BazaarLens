@@ -9,6 +9,15 @@ out/
 dist/
 build/
 
+# Rust
+/target/
+**/target/
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
 # Environment variables (NEVER commit these)
 .env
 .env.local
