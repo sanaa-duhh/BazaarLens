@@ -50,3 +50,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+test-images/
+backend/.env
+backend/bazaarlens.db

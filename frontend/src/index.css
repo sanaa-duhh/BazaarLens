@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+    font-family: var(--font-sans);
+  }
+
+  button, a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in-1 { animation: fadeIn 0.3s ease-in-out 0.05s both; }
+  .animate-fade-in-2 { animation: fadeIn 0.3s ease-in-out 0.20s both; }
+  .animate-fade-in-3 { animation: fadeIn 0.3s ease-in-out 0.35s both; }
+  .animate-fade-in-4 { animation: fadeIn 0.3s ease-in-out 0.50s both; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}

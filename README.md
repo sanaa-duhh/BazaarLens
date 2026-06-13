@@ -23,8 +23,8 @@ Claude Code will automatically load `CLAUDE.md` context for every session.
 | Layer | Tech |
 |---|---|
 | Frontend | Next.js 14, TypeScript, TailwindCSS, shadcn/ui, PWA |
-| Backend | FastAPI (Python) |
-| Database | Supabase (PostgreSQL) |
+| Backend | Axum (Rust) |
+| Database | SQLite (local) + Supabase (PostgreSQL) |
 | AI | OpenRouter → DeepSeek V4 Pro + Minimax M3 |
 | Deploy | Vercel (frontend) + Railway (backend) |
 
@@ -33,7 +33,7 @@ Claude Code will automatically load `CLAUDE.md` context for every session.
 ```
 bazaarlens/
 ├── frontend/     Next.js PWA
-├── backend/      FastAPI server
+├── backend/      Axum (Rust) server
 ├── docs/         Blueprint + API contract
 └── CLAUDE.md     Full project context (read this first)
 ```
