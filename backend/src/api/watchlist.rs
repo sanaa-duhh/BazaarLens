@@ -26,7 +26,8 @@ pub fn router() -> Router<Arc<AppState>> {
 }
 
 /// Extracts the required `X-Device-Id` header, returning `MissingDeviceId` if absent.
-fn device_id(headers: &HeaderMap) -> Result<String, AppError> {
+/// `pub(crate)` so push and event routes can reuse the same helper.
+pub(crate) fn device_id(headers: &HeaderMap) -> Result<String, AppError> {
     headers
         .get("x-device-id")
         .and_then(|v| v.to_str().ok())

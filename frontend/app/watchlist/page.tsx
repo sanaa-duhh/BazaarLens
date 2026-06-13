@@ -4,6 +4,7 @@ import { Eye } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { WatchlistCard } from '@/components/watchlist/WatchlistCard';
 import { EmptyWatchlist } from '@/components/watchlist/EmptyWatchlist';
+import { EnableAlertsCard } from '@/components/watchlist/EnableAlertsCard';
 import { useWatchlist } from '@/hooks/useWatchlist';
 
 export default function WatchlistPage() {
@@ -32,15 +33,21 @@ export default function WatchlistPage() {
           ))}
         </div>
       ) : items.length === 0 ? (
-        <EmptyWatchlist />
+        <>
+          <EnableAlertsCard />
+          <EmptyWatchlist />
+        </>
       ) : (
-        <ul className="space-y-3 p-4">
-          {items.map((item) => (
-            <li key={item.id}>
-              <WatchlistCard item={item} onRemove={remove} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <EnableAlertsCard />
+          <ul className="space-y-3 p-4">
+            {items.map((item) => (
+              <li key={item.id}>
+                <WatchlistCard item={item} onRemove={remove} />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </main>
   );

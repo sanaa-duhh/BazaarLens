@@ -1,5 +1,6 @@
 pub mod health;
 pub mod intelligence;
+pub mod push;
 pub mod scan;
 pub mod watchlist;
 
@@ -14,4 +15,5 @@ pub fn router() -> Router<Arc<AppState>> {
         .merge(scan::router())
         .merge(intelligence::router())
         .merge(watchlist::router())
+        .merge(push::router())
 }

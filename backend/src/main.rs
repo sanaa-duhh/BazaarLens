@@ -14,12 +14,14 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 use services::llm::LlmService;
 use services::product_lookup::ProductLookupService;
+use services::push_service::PushService;
 
 pub struct AppState {
     pub db: sqlx::SqlitePool,
     pub config: config::Settings,
     pub product_lookup: ProductLookupService,
     pub llm: LlmService,
+    pub push: Option<PushService>,
 }
 
 #[tokio::main]
@@ -38,11 +40,25 @@ async fn main() -> anyhow::Result<()> {
     let pool = db::create_pool(&settings.database_url).await?;
 
     let cors = build_cors(&settings.allowed_origins);
+    let push = if settings.vapid_private_key.is_empty() {
+        tracing::warn!("VAPID_PRIVATE_KEY not set — push notifications disabled");
+        None
+    } else {
+        match PushService::new(&settings.vapid_private_key) {
+            Ok(svc) => Some(svc),
+            Err(e) => {
+                tracing::error!("failed to initialise PushService: {e}");
+                None
+            }
+        }
+    };
+
     let state = Arc::new(AppState {
         db: pool,
         product_lookup: ProductLookupService::new(),
         llm: LlmService::new(settings.openrouter_api_key.clone()),
         config: settings.clone(),
+        push,
     });
 
     let app = Router::new()
