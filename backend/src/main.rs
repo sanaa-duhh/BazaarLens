@@ -12,9 +12,14 @@ use tower_http::cors::CorsLayer;
 use tracing::info;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
+use services::llm::LlmService;
+use services::product_lookup::ProductLookupService;
+
 pub struct AppState {
     pub db: sqlx::SqlitePool,
     pub config: config::Settings,
+    pub product_lookup: ProductLookupService,
+    pub llm: LlmService,
 }
 
 #[tokio::main]
@@ -35,6 +40,8 @@ async fn main() -> anyhow::Result<()> {
     let cors = build_cors(&settings.allowed_origins);
     let state = Arc::new(AppState {
         db: pool,
+        product_lookup: ProductLookupService::new(),
+        llm: LlmService::new(settings.openrouter_api_key.clone()),
         config: settings.clone(),
     });
 
