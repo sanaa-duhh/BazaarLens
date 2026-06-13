@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
+import { HealthCheck } from '@/components/HealthCheck';
 import './globals.css';
 
 const geist = localFont({ src: './fonts/GeistVF.woff', variable: '--font-sans' });
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`dark ${geist.variable}`}>
       <body className="bg-background text-foreground font-sans antialiased min-h-screen">
+        <HealthCheck />
         {children}
       </body>
     </html>
